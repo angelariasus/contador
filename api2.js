@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
+const cors = require('cors');  
 
+app.use(cors());
 app.use(bodyParser.json());
 
 let contador = {
   suben: 0,
   bajan: 0,
-  paradero: 0,
   subenParadero: 0,
   bajanParadero: 0
 };
