@@ -21,7 +21,7 @@ app.get('/contador', (req, res) => {
 
 app.post('/contador/suben', (req, res) => {
   contador.suben++;
-  if (contador.paradero === 0) {
+  if (contador.paradero === 1) {
     contador.subenParadero++;
   }
   res.json(contador);
@@ -29,7 +29,7 @@ app.post('/contador/suben', (req, res) => {
 
 app.post('/contador/bajan', (req, res) => {
   contador.bajan++;
-  if (contador.paradero === 0) {
+  if (contador.paradero === 1) {
     contador.bajanParadero++;
   }
   res.json(contador);
