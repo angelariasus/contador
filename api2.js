@@ -1,11 +1,16 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const app = express();
 const port = 3000;
-const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
 let contador = { suben: 0, bajan: 0 };
+
+app.use(cors()); // Permitir solicitudes desde cualquier origen
+app.use(bodyParser.json());
 
 app.get('/contador', (req, res) => {
   res.json(contador);
