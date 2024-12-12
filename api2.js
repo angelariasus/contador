@@ -2,9 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
-const cors = require('cors');  
 
-app.use(cors());
 app.use(bodyParser.json());
 
 let contador = {
@@ -21,17 +19,13 @@ app.get('/contador', (req, res) => {
 
 app.post('/contador/suben', (req, res) => {
   contador.suben++;
-  if (contador.paradero === 1) {
-    contador.subenParadero++;
-  }
+  contador.subenParadero++;
   res.json(contador);
 });
 
 app.post('/contador/bajan', (req, res) => {
   contador.bajan++;
-  if (contador.paradero === 1) {
-    contador.bajanParadero++;
-  }
+  contador.bajanParadero++;
   res.json(contador);
 });
 
@@ -43,14 +37,16 @@ app.post('/contador/reiniciar', (req, res) => {
   res.json(contador);
 });
 
-app.post('/contador/paradero', (req, res) => {
-  const { estado } = req.body;
-  console.log(`Estado recibido: ${estado}`);  
-  if (estado === 0) {
-    contador.subenParadero = 0;
-    contador.bajanParadero = 0;
+app.post('/contador/actualizarParadero', (req, res) => {
+  const { subenParadero, bajanParadero } = req.body;
+  if (typeof subenParadero !== 'number' || typeof bajanParadero !== 'number') {
+    return res.status(400).json({ error: 'Los valores deben ser números.' });
   }
-  contador.paradero = estado;
+  if (subenParadero < 0 || bajanParadero < 0) {
+    return res.status(400).json({ error: 'Los valores no pueden ser negativos.' });
+  }
+  contador.subenParadero = subenParadero;
+  contador.bajanParadero = bajanParadero;
   res.json(contador);
 });
 
