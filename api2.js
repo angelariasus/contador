@@ -50,6 +50,19 @@ app.post('/contador/estado', (req, res) => {
   res.json(contador);
 });
 
+app.post('/contador/actualizarParadero', (req, res) => {
+  const { subenParadero, bajanParadero } = req.body;
+  if (typeof subenParadero !== 'number' || typeof bajanParadero !== 'number') {
+    return res.status(400).json({ error: 'Los valores deben ser números.' });
+  }
+  if (subenParadero < 0 || bajanParadero < 0) {
+    return res.status(400).json({ error: 'Los valores no pueden ser negativos.' });
+  }
+  contador.subenParadero = subenParadero;
+  contador.bajanParadero = bajanParadero;
+  res.json(contador);
+});
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });
